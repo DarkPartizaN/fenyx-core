@@ -6,6 +6,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL11;
 
 import com.fenyx.input.Input;
 
@@ -61,6 +62,11 @@ final class EngineWindow {
                 show_system_cursor = Input.show_system_cursor;
             }
 
+            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+
+            EngineAPI.updateFrame();
+            EngineAPI.renderFrame();
+
             glfwSwapBuffers(window_handle);
             glfwPollEvents();
         }
@@ -80,7 +86,8 @@ final class EngineWindow {
 
             if (action == GLFW_PRESS) {
                 char c = characterForKeyCode(key);
-                if (c != 0) Input.inputChar(c);
+                if (c != 0)
+                    Input.inputChar(c);
 
                 Input.pressKey(key);
             }

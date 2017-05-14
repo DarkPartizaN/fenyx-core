@@ -10,9 +10,9 @@ public final class EngineAPI {
 
     //FPS
     private static int fps;
-    private static int tmp_fps;
-    private static long fps_update;
-    private static long last_frametime = System.currentTimeMillis();
+    private static int tmpFps;
+    private static long fpsUpdate;
+    private static long lastFrametime = System.currentTimeMillis();
     private static float frametime;
 
     //States
@@ -26,26 +26,21 @@ public final class EngineAPI {
 
     //Frame
     public static void updateFrame() {
-        long currentFrameTime = System.currentTimeMillis();
+        long currentFrametime = System.currentTimeMillis();
 
         EngineTimer.tick();
         //Input.updateMouseWorldPos();
 
-        if ((currentState != null)
-                && (currentState.isActive())) {
-            currentState.process();
-        }
+        if (currentState != null && currentState.isActive()) currentState.process();
 
-        if (currentFrameTime - fps_update >= 1000L) {
-            fps_update = currentFrameTime;
-            fps = tmp_fps;
-            tmp_fps = 0;
-        } else {
-            tmp_fps += 1;
-        }
+        if (currentFrametime - fpsUpdate >= 1000) {
+            fpsUpdate = currentFrametime;
+            fps = tmpFps;
+            tmpFps = 0;
+        } else tmpFps += 1;
 
-        frametime = (float) (currentFrameTime - last_frametime) / 10.0F;
-        last_frametime = currentFrameTime;
+        frametime = (float) (currentFrametime - lastFrametime) / 10f;
+        lastFrametime = currentFrametime;
     }
 
     public static void renderFrame() {
@@ -57,7 +52,7 @@ public final class EngineAPI {
     }
 
     public static int getTMPFps() {
-        return tmp_fps;
+        return tmpFps;
     }
 
     public static float getFrametime() {
