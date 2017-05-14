@@ -25,10 +25,10 @@ public abstract class EngineState {
     }
 
     public final boolean isActive() {
-        return this.active;
+        return active;
     }
 
     public EngineState getPrevState() {
-        return this.prevState;
+        return prevState;
     }
 }
