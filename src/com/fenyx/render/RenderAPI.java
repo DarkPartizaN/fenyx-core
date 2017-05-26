@@ -335,7 +335,7 @@ public class RenderAPI {
         if ((s == null) || (s.length() <= 0)) {
             return;
         }
-        setTexture(font.getFontTexture());
+        setTexture(font.getFontImage());
         setBlending(BlendingMode.BLEND_ALPHA);
         setColor(color);
 

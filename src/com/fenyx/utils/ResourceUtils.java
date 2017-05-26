@@ -15,6 +15,7 @@ import java.util.Scanner;
 public final class ResourceUtils {
 
     public static final String dir_root = new File(".").getAbsoluteFile().getParentFile().getAbsolutePath().concat("/");
+
     public static String dir_images = "res/gfx/";
     public static String dir_maps = "res/maps/";
     public static String dir_fonts = "res/fonts/";
@@ -167,7 +168,7 @@ public final class ResourceUtils {
             return Font.createFont(0, new File(dir_root.concat(dir_fonts).concat(font_name).concat(".ttf"))).deriveFont(size);
         } catch (java.awt.FontFormatException | IOException ex) {
             GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
-            return gc.createCompatibleImage(1, 1, 3).createGraphics().getFont().deriveFont(size);
+            return gc.createCompatibleImage(1, 1).createGraphics().getFont().deriveFont(size);
         }
     }
 
