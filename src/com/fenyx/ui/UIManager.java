@@ -48,14 +48,11 @@ public final class UIManager {
     }
 
     public static void draw() {
-        if (!state) {
-            return;
-        }
+        if (!state) return;
+
         RenderAPI.setOrtho(ScreenConfig.screen_width, ScreenConfig.screen_height, true);
 
-        for (UI ui : uis.get_all()) {
-            ui.draw();
-        }
+        for (UI ui : uis.get_all()) ui.draw();
     }
 
     private static void sort() {

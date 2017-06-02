@@ -1,5 +1,7 @@
 package com.fenyx.render;
 
+import com.fenyx.utils.MathUtils;
+
 public final class Color {
 
     public static final Color transparent = new Color(0.0F, 0.0F, 0.0F, 0.0F);
@@ -68,5 +70,13 @@ public final class Color {
 
     public Color invert_no_alpha() {
         return new Color(1.0F - this.r, 1.0F - this.g, 1.0F - this.b, this.a);
+    }
+
+    public static Color getRandom() {
+        float r = MathUtils.random_float(0, 0.33f);
+        float g = MathUtils.random_float(0, 0.33f);
+        float b = MathUtils.random_float(0, 0.33f);
+
+        return new Color(r, g, b, 1f);
     }
 }

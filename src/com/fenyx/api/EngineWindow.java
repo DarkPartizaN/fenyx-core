@@ -49,7 +49,7 @@ final class EngineWindow {
         glfwSetWindowPos(window_handle, x, y);
     }
 
-    public void display() {
+    void display() {
         glfwShowWindow(window_handle);
 
         while (!glfwWindowShouldClose(window_handle)) {
@@ -72,10 +72,13 @@ final class EngineWindow {
         }
 
         glfwFreeCallbacks(window_handle);
+
         glfwDestroyWindow(window_handle);
 
         glfwTerminate();
         glfwSetErrorCallback(null).free();
+
+        System.gc();
     }
 
     private class KeyCallback extends GLFWKeyCallback {

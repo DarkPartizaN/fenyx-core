@@ -38,8 +38,8 @@ public abstract class SceneObject {
     protected RenderObject render_object;
     private long birthtime;
     private long lifetime;
-    private long killtime;
-    private boolean killme;
+    private long killtime = -1;
+    private boolean killme = false;
     protected SceneObject target;
     protected SceneObject parent;
     protected SceneObjectPool childs;
@@ -60,9 +60,7 @@ public abstract class SceneObject {
     }
 
     public abstract void init();
-
     public abstract void update();
-
     public abstract void destroy();
 
     public final float getX() {
@@ -121,11 +119,6 @@ public abstract class SceneObject {
     }
 
     public final void setAngle(float angle) {
-        if (angle < -180.0F)
-            angle = 180.0F;
-        if (angle >= 180.0F)
-            angle = -180.0F;
-
         this.angle = angle;
 
         refreshAll();

@@ -385,6 +385,7 @@ public class RenderAPI {
         if (object.material != null) {
             object.material.bind();
         }
+
         object.prerender();
         object.render();
         object.postrender();
@@ -392,6 +393,7 @@ public class RenderAPI {
         if (object.material != null) {
             object.material.unbind();
         }
+
         resetView();
     }
 }

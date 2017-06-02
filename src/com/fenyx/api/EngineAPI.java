@@ -1,7 +1,11 @@
 package com.fenyx.api;
 
+import com.fenyx.render.Color;
+import com.fenyx.render.RenderAPI;
+import com.fenyx.render.Renderer;
 import com.fenyx.scene.Scene;
 import com.fenyx.scene.SceneManager;
+import com.fenyx.ui.UIManager;
 
 /**
  *
@@ -10,6 +14,7 @@ import com.fenyx.scene.SceneManager;
 public final class EngineAPI {
 
     private static EngineState currentState;
+    private static Renderer currentRenderer;
 
     //FPS
     private static int fps;
@@ -25,7 +30,6 @@ public final class EngineAPI {
     //This class represents engine functions
     //with safe access from game library
     //======================================
-
     //States
     public static void setState(EngineState state) {
         currentState = state;
@@ -42,21 +46,35 @@ public final class EngineAPI {
         EngineTimer.tick();
         //Input.updateMouseWorldPos();
 
-        if (currentState != null && currentState.isActive())
-            currentState.process();
+        if (currentState != null && currentState.isActive()) currentState.process();
 
         if (currentFrametime - fpsUpdate >= 1000) {
             fpsUpdate = currentFrametime;
             fps = tmpFps;
             tmpFps = 0;
         } else
-            tmpFps += 1;
+            tmpFps++;
 
         frametime = (float) (currentFrametime - lastFrametime) / 10f;
         lastFrametime = currentFrametime;
     }
 
     public static void renderFrame() {
+        if (currentRenderer != null) {
+            currentRenderer.prerender();
+            currentRenderer.render();
+            currentRenderer.postrender();
+        }
+
+        if (EngineDefines.DEFINE_UI_ENABLED) {
+            UIManager.update();
+            UIManager.draw();
+        }
+
+        if (EngineDefines.DEFINE_SHOW_FPS) {
+            RenderAPI.setOrtho(ScreenConfig.screen_width, ScreenConfig.screen_height, true);
+            RenderAPI.drawString("FPS:" + getFps(), 2, 2, Color.green);
+        }
     }
 
     //FPS
@@ -70,6 +88,17 @@ public final class EngineAPI {
 
     public static float getFrametime() {
         return frametime;
+    }
+
+    //================================
+    //Renderer
+    //================================
+    public static void setRenderer(Renderer render) {
+        currentRenderer = render;
+    }
+
+    public static Renderer getRenderer() {
+        return currentRenderer;
     }
 
     //SCENE
